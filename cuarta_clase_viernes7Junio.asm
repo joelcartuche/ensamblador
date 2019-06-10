@@ -12,6 +12,7 @@ section .data
 	;mov[mensaje+0],H -> desplazamiento en mesaje ubicandolo en la primera posicion
 	mensaje db "hola mundo" ,0xa
 	len equ $-mensaje
+	;tres tipos de definir constantes equ,assign,define
 
 section .text
 	global _start
@@ -32,7 +33,7 @@ _start:
     mov edx,len
     int 80H 
 
-    mov[mensaje+5],dword 'niña' ;los caracteres especiales ocupan dos bits
+    mov[mensaje+5],dword 'nina' ;los caracteres especiales ocupan dos bits
     ;mov[mensaje+0],dword 'mala' es lo mismo q la linea anterior
 
     mov eax,04 
