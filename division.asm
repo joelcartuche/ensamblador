@@ -101,7 +101,7 @@ _start:
 
 
 
-    mov eax,1
+    mov eax,19
     int 80H
 
     

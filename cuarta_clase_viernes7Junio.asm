@@ -10,7 +10,7 @@ section .data
 	;cambiar el mensaje con dword
 	;permite hacer desplazamientos a nivel de memoria 
 	;mov[mensaje+0],H -> desplazamiento en mesaje ubicandolo en la primera posicion
-	mensaje db "hola mundo" ,0xa
+	mensaje dt "hola mundo" ,0xa
 	len equ $-mensaje
 	;tres tipos de definir constantes equ,assign,define
 
@@ -24,16 +24,7 @@ _start:
     mov edx,len
     int 80H 
 
-    mov[mensaje],dword 'mala'
-    ;mov[mensaje+0],dword 'mala' es lo mismo q la linea anterior
-
-    mov eax,04 
-    mov ebx,01 
-    mov ecx,mensaje
-    mov edx,len
-    int 80H 
-
-    mov[mensaje+5],dword 'nina' ;los caracteres especiales ocupan dos bits
+    mov[mensaje],tword 'mala '
     ;mov[mensaje+0],dword 'mala' es lo mismo q la linea anterior
 
     mov eax,04 
