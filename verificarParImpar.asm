@@ -55,7 +55,7 @@ mensajesuma:
     ;else{noigual}
 
 igual:
-    mov[resultadosuma+11],dword 'par'
+    mov [resultadosuma+11],dword 'par'
     mov eax,4
     mov ebx,1
     
@@ -66,7 +66,7 @@ igual:
     jmp salida
     
 noigual:
-    mov[resultadosuma+11],dword 'impar'
+    mov [resultadosuma+11],dword 'impar'
     mov eax,4
     mov ebx,1
     
