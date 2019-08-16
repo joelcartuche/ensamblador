@@ -1,1 +1,1 @@
-1*5=5, 2*4=8, 3*3=9, 4*2=8, 5*1=5
+1=1veces,2=3veces,3=1veces,5=1veces,2=3veces,2=3veces
