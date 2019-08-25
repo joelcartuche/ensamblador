@@ -80,6 +80,7 @@ section .data
 
 
 ;impresion brazo derecho;
+
 	msg11 db 0x1b ,"[10;26f\" ; 6 espacios para contener al dato
 	lenmsg11 equ $-msg11
 
@@ -87,8 +88,7 @@ section .data
 	lenmsg12 equ $-msg12
 
 	msg13 db 0x1b ,"[12;28f\" ; 6 espacios para contener al dato
-	lenmsg13 equ $-msg13
-
+	lenmsg13 equ $-msg13	
 	
 ;fin impresion brazo derecho
 

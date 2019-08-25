@@ -33,6 +33,13 @@ section .bss
 
 
 section .data
+	
+	
+	msj2 db "Ingrese un numero",10
+	lenMsg2 equ $- msj2
+
+	
+
 	msj1 db "LEER EL ARCHIVO",10
 	lenMsg1 equ $- msj1
 
@@ -40,7 +47,7 @@ section .data
 	lenArreglo equ $- arreglo
 
 
-	textoGuardar db "0=0veces,0=0veces,0=0veces,0=0veces,0=0veces,0=0veces,0=0veces,0=0veces,0=0veces,0=0veces,0=0veces"
+	textoGuardar db "0=0veces"
 	lenTextoGuardar equ $-textoGuardar
 
 
@@ -51,6 +58,15 @@ section .text
     global _start    
 
 _start:
+	imprimir msj2,lenMsg2
+
+	leer auxiliar,2
+
+	mov al,[auxiliar]
+
+	sub al,'0'
+	mov [auxiliar],al
+
 	mov al,0
 	mov [contadorNum],al
 	mov [indice],al
@@ -103,101 +119,51 @@ leerArreglo:
 
 
 	mov al,0
-
+	
 bucleI:
 	mov [auxa],al
 	cmp al,lenArreglo
 	jz salir
-	mov bl,0
 
-;	mov bl,al
-;	add ebx,'0'
-;	mov [auxb],ebx
-;	imprimirData auxb,2
-	bucleJ:
-	mov [auxb],bl
-	cmp bl,lenArreglo
-	jz finBucleI
-
-	mov cl,[arreglo+eax]
-	mov dl,[arreglo+ebx]
-
-	;cmp dl,cl
-	;jz ordenar ; ja para ordenar de menor a mayor y jb de mayor a menor
-
-	;mov dl,[arreglo+eax]
-	;add dl,'0'
-	;mov [auxd],dl
-	;imprimir auxd,2
-	cmp dl,cl
+	mov al,[arreglo+eax]
+	mov bl,[auxiliar]
+	cmp al,bl
 	jz guardar
 
-	finBucleJ:
-	mov bl,[auxb]
-	mov al,[auxa]; recuperamos el valor de eax
-	inc bl
-	jmp bucleJ
-
 	finBucleI:
-
-	call guardarCaracter
-	mov bl,0
-	mov [contadorNum],bl
 
 	mov al,[auxa]
 	inc al
 	jmp bucleI
 
-	
-
 
 salir:
-	mov ecx,[indice]
-	mov al,[contadorNum2]
-	mov bl,[variableContada]
+	mov al,[variableContada]
 	add al,'0'
-	add bl,'0'
-	mov [textoGuardar+ecx],bl
-	add ecx,2
-	mov [textoGuardar+ecx],al
+	mov [textoGuardar+0],al
+	mov al,[contadorNum]
+	add al,'0'
+	mov [textoGuardar+2],al
 
+	
 	imprimir textoGuardar,lenTextoGuardar
+
 	call guardarEnArchivo
 	mov eax, 1
 	int 80H
 
 
 guardar:
-	mov [variableContada],cl
-	mov dl,[contadorNum]
-	inc dl
-	;add dl,'0'
-	;mov [contadorNum],dl
+	mov [variableContada],bl
 
-	;mov dl,[contadorNum]
-	;sub dl,'0'
-	mov [contadorNum],dl
-	jmp finBucleJ
-	
-guardarCaracter:
-	mov al,[variableContada]
-	
-	mov ecx,[indice]
-	add al,'0'
-	
-	mov [textoGuardar+ecx],al
-	inc ecx
-	mov [indice],ecx
-	inc ecx
-	mov edx,2
 	mov bl,[contadorNum]
-	mov [contadorNum2],bl
-	add bl,'0'
-	mov [textoGuardar+ecx],bl
-	add ecx,7
-	mov [indice],ecx
+	inc bl
 
-	ret
+	mov [contadorNum],bl
+
+	jmp finBucleI
+	
+
 
 
 guardarEnArchivo:
@@ -213,7 +179,6 @@ guardarEnArchivo:
 
 	;********* archivo sin exepciones ****************
 	mov dword [idarchivo2],eax ; respaldamos el id del archivo
-	imprimir msj1 ,lenMsg1
 	
 	mov eax,4
 	mov ebx,[idarchivo2]

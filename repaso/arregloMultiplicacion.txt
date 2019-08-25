@@ -1,1 +1,0 @@
-1=1veces,2=3veces,3=1veces,5=1veces,2=3veces,2=3veces

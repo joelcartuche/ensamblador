@@ -27,6 +27,7 @@ section .bss
 	auxb resb 10 
 	auxd resb 10 
 
+
 	contadorNum resb 10
 	contadorNum2 resb 10
 	variableContada resb 10
@@ -38,14 +39,14 @@ section .data
 	msj1 db "LEER EL ARCHIVO",10
 	lenMsg1 equ $- msj1
 
-	arreglo db 0,0,0,0,0,0
+	arreglo db 0,0,0,0,0,0,0,0,0
 	lenArreglo equ $- arreglo
 
-	arreglo2 db 0,0,0,0,0,0
+	arreglo2 db 0,0,0,0,0,0,0,0,0
 	lenArreglo2 equ $- arreglo2
 
 
-	textoGuardar db "0=0veces,0=0veces,0=0veces,0=0veces,0=0veces,0=0veces"
+	textoGuardar db "0=0veces,0=0veces,0=0veces,0=0veces,0=0veces,0=0veces,0=0veces,0=0veces,0=0veces"
 	lenTextoGuardar equ $-textoGuardar
 
 
@@ -126,32 +127,6 @@ _start:
 	mov ecx,0
 
 
-leerArreglo1:
-	mov al,[text+ecx]	
-	sub al,'0'
-	mov[esi],al
-	inc esi
-	inc edi
-	inc ecx
-	cmp edi,lenArreglo ;cuando edi es menor
-	jb leerArreglo1
-
-
-	mov esi ,arreglo2 ;indice fuente
-	mov edi,0 ; indice destino
-	mov ecx,0
-
-leerArreglo2:
-	mov al,[text1+ecx]	
-	sub al,'0'
-	mov[esi],al
-	inc esi
-	inc edi
-	inc ecx
-	cmp edi,lenArreglo2 ;cuando edi es menor
-	jb leerArreglo2
-
-
 	mov al,0
 
 bucleI:
@@ -160,26 +135,20 @@ bucleI:
 	jz salir
 	mov bl,0
 
-;	mov bl,al
-;	add ebx,'0'
-;	mov [auxb],ebx
-;	imprimirData auxb,2
+	mov cl,[text+eax]
+	mov [auxiliar],cl
+
 	bucleJ:
 	mov [auxb],bl
 	cmp bl,lenArreglo
 	jz finBucleI
 
-	mov cl,[arreglo+eax]
-	mov dl,[arreglo+ebx]
+	mov al,[auxiliar]
+	mov bl,[text1+ebx]
 
-	;cmp dl,cl
-	;jz ordenar ; ja para ordenar de menor a mayor y jb de mayor a menor
-
-	;mov dl,[arreglo+eax]
-	;add dl,'0'
-	;mov [auxd],dl
-	;imprimir auxd,2
-	cmp cl,dl
+	sub al,'0'
+	sub bl,'0'
+	cmp al,bl
 	jz guardar2
 
 	finBucleJ:
@@ -189,7 +158,7 @@ bucleI:
 	jmp bucleJ
 
 	finBucleI:
-
+	
 	call guardarCaracter
 	mov bl,0
 	mov [contadorNum],bl
@@ -200,7 +169,6 @@ bucleI:
 
 
 salir:
-	
 	imprimir textoGuardar,lenTextoGuardar
 	call guardarEnArchivo
 	mov eax, 1
@@ -210,15 +178,9 @@ salir:
 
 
 guardar2:
-	mov [variableContada],cl
-
+	mov [variableContada],al
 	mov dl,[contadorNum]
 	inc dl
-	;add dl,'0'
-	;mov [contadorNum],dl
-
-	;mov dl,[contadorNum]
-	;sub dl,'0'
 	mov [contadorNum],dl
 	jmp finBucleJ
 	
